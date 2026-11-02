@@ -42,8 +42,18 @@ def best_k_by_silhouette(curve):
     # the k with the highest silhouette (smallest k on ties).
     return max(curve, key=lambda k: (curve[k], -k))
 
-# Step 5 - fit_dbscan (not yet solved)
-# TODO: implement
+# Step 5 - fit_dbscan
+from sklearn.cluster import DBSCAN
+
+def fit_dbscan(X, eps=0.2, min_samples=5):
+    return DBSCAN(eps=eps, min_samples=min_samples).fit(X)
+
+def dbscan_summary(dbscan):
+    unique_labels = list(dict.fromkeys(x for x in dbscan.labels_))
+    return {
+        'n_clusters': len([x for x in unique_labels if x != -1]),
+        'n_noise': len([x for x in unique_labels if x == -1]),
+        'n_core': len(dbscan.core_sample_indices_)}
 
 # Step 6 - dbscan_predict (not yet solved)
 # TODO: implement
