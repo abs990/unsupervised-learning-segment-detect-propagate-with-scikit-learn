@@ -79,8 +79,16 @@ def flag_anomalies(gmm, X, contamination=0.04):
     densities = gmm.score_samples(X)
     return densities < np.percentile(densities, 100 * contamination)
 
-# Step 9 - digits_data (not yet solved)
-# TODO: implement
+# Step 9 - digits_data
+from sklearn.datasets import load_digits
+from sklearn.model_selection import train_test_split
+
+def digits_data(test_size=0.25, random_state=42):
+    # load_digits + stratified train_test_split; return (X_train, X_test, y_train, y_test).
+    digits = load_digits()
+    return train_test_split(
+        digits.data, digits.target, 
+        test_size=test_size, random_state=random_state, stratify=digits.target)
 
 # Step 10 - baseline_50_random (not yet solved)
 # TODO: implement
