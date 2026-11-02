@@ -73,8 +73,11 @@ def bic_curve(X, ks):
         k:fit_gmm(X, k).bic(X) for k in ks
     }
 
-# Step 8 - flag_anomalies (not yet solved)
-# TODO: implement
+# Step 8 - flag_anomalies
+def flag_anomalies(gmm, X, contamination=0.04):
+    # score_samples, percentile threshold, boolean mask of low-density points.
+    densities = gmm.score_samples(X)
+    return densities < np.percentile(densities, 100 * contamination)
 
 # Step 9 - digits_data (not yet solved)
 # TODO: implement
