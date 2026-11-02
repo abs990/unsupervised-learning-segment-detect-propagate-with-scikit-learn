@@ -55,8 +55,12 @@ def dbscan_summary(dbscan):
         'n_noise': len([x for x in unique_labels if x == -1]),
         'n_core': len(dbscan.core_sample_indices_)}
 
-# Step 6 - dbscan_predict (not yet solved)
-# TODO: implement
+# Step 6 - dbscan_predict
+from sklearn.neighbors import KNeighborsClassifier
+
+def dbscan_predict(dbscan, X_new, n_neighbors=50):
+    # KNN on the core samples and their labels; predict labels for X_new.
+    return KNeighborsClassifier(n_neighbors=3).fit(dbscan.components_, dbscan.labels_[dbscan.core_sample_indices_]).predict(X_new)
 
 # Step 7 - fit_gmm (not yet solved)
 # TODO: implement
