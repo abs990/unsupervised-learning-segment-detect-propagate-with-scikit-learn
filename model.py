@@ -60,7 +60,7 @@ from sklearn.neighbors import KNeighborsClassifier
 
 def dbscan_predict(dbscan, X_new, n_neighbors=50):
     # KNN on the core samples and their labels; predict labels for X_new.
-    return KNeighborsClassifier(n_neighbors=3).fit(dbscan.components_, dbscan.labels_[dbscan.core_sample_indices_]).predict(X_new)
+    return KNeighborsClassifier(n_neighbors=n_neighbors).fit(dbscan.components_, dbscan.labels_[dbscan.core_sample_indices_]).predict(X_new)
 
 # Step 7 - fit_gmm (not yet solved)
 # TODO: implement
