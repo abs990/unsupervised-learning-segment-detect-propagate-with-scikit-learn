@@ -103,8 +103,10 @@ def representative_digits(X_train, k=50, random_state=42):
     model = fit_kmeans(X_train, k, random_state)
     return model, np.argmin(model.transform(X_train), axis=0)
 
-# Step 12 - train_on_representatives (not yet solved)
-# TODO: implement
+# Step 12 - train_on_representatives
+def train_on_representatives(X_train, y_train, rep_idx, X_test, y_test):
+    # logistic regression on the representative rows only; return test accuracy.
+    return LogisticRegression(max_iter=10000).fit(X_train[rep_idx], y_train[rep_idx]).score(X_test, y_test)
 
 # Step 13 - propagate_and_train (not yet solved)
 # TODO: implement
