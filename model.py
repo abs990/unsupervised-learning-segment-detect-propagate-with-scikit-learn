@@ -90,8 +90,12 @@ def digits_data(test_size=0.25, random_state=42):
         digits.data, digits.target, 
         test_size=test_size, random_state=random_state, stratify=digits.target)
 
-# Step 10 - baseline_50_random (not yet solved)
-# TODO: implement
+# Step 10 - baseline_50_random
+from sklearn.linear_model import LogisticRegression
+
+def baseline_50_random(X_train, y_train, X_test, y_test, n_labeled=50, random_state=42):
+    # LogisticRegression(max_iter=10000) on the first n_labeled rows; return test accuracy.
+    return LogisticRegression(max_iter=10000, random_state=random_state).fit(X_train[:n_labeled], y_train[:n_labeled]).score(X_test, y_test)
 
 # Step 11 - representative_digits (not yet solved)
 # TODO: implement
