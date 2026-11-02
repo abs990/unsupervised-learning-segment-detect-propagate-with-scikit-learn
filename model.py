@@ -97,8 +97,11 @@ def baseline_50_random(X_train, y_train, X_test, y_test, n_labeled=50, random_st
     # LogisticRegression(max_iter=10000) on the first n_labeled rows; return test accuracy.
     return LogisticRegression(max_iter=10000, random_state=random_state).fit(X_train[:n_labeled], y_train[:n_labeled]).score(X_test, y_test)
 
-# Step 11 - representative_digits (not yet solved)
-# TODO: implement
+# Step 11 - representative_digits
+def representative_digits(X_train, k=50, random_state=42):
+    # fit k-means; rep_idx[j] = index of the row nearest centroid j; return (kmeans, rep_idx).
+    model = fit_kmeans(X_train, k, random_state)
+    return model, np.argmin(model.transform(X_train), axis=0)
 
 # Step 12 - train_on_representatives (not yet solved)
 # TODO: implement
