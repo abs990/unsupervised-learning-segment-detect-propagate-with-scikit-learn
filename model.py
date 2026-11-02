@@ -108,8 +108,30 @@ def train_on_representatives(X_train, y_train, rep_idx, X_test, y_test):
     # logistic regression on the representative rows only; return test accuracy.
     return LogisticRegression(max_iter=10000).fit(X_train[rep_idx], y_train[rep_idx]).score(X_test, y_test)
 
-# Step 13 - propagate_and_train (not yet solved)
-# TODO: implement
+# Step 13 - propagate_and_train
+def propagate_and_train(X_train, y_train, kmeans, rep_idx, X_test, y_test, percentile=20):
+    # propagate each cluster's representative label to its closest percentile of points; train; report.
+    n_samples, n_features = X_train.shape
+    
+    distances = kmeans.transform(X_train) # (n_samples, n_clusters)
+    _, n_clusters = distances.shape
+
+    clusters = kmeans.labels_
+
+    own = distances[np.arange(n_samples), clusters]     # distance to "its" cluster
+    cutoffs = np.array([np.percentile(own[clusters == c], percentile) for c in range(n_clusters)])
+
+    mask = own <= cutoffs[clusters]
+    prop_labels = y_train[rep_idx[clusters]]
+
+    model = LogisticRegression(max_iter=10000).fit(X_train[mask, :], prop_labels[mask])
+    y_pred = model.predict(X_test)
+
+    return {
+        "n_propagated": int(mask.sum()),
+        "label_accuracy": float(np.sum(prop_labels[mask] == y_train[mask]) / len(y_train[mask])),
+        "test_accuracy": model.score(X_test, y_test)
+    }
 
 # Step 14 - synthetic_image (not yet solved)
 # TODO: implement
